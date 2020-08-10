@@ -34,6 +34,7 @@ const styles = theme => ({
 })
 
 function Dashboard(props) {
+	console.log("Change");
 	const { classes } = props
 
 	if(!firebase.getCurrentUsername()) {
