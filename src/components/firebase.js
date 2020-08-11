@@ -2,6 +2,7 @@ import app from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firebase-firestore'
 
+<<<<<<< HEAD
 const config = {
 	apiKey: "AIzaSyCy4CEw_-p-zwId4S9lJcPHoS4LfIRF968",
 	authDomain: "courseloop-95744.firebaseapp.com",
@@ -10,6 +11,18 @@ const config = {
 	storageBucket: "courseloop-95744.appspot.com",
 	messagingSenderId: "896111699616"
 }
+=======
+var config = {
+    apiKey: "AIzaSyCy4CEw_-p-zwId4S9lJcPHoS4LfIRF968",
+    authDomain: "courseloop-95744.firebaseapp.com",
+    databaseURL: "https://courseloop-95744.firebaseio.com",
+    projectId: "courseloop-95744",
+    storageBucket: "courseloop-95744.appspot.com",
+	messagingSenderId: "896111699616",
+	appId: "1:896111699616:web:04fbb3a7b2862fe9698bc5",
+    measurementId: "G-1M4NNRSYTF"
+  };
+>>>>>>> 6a5a3a3380098eb6dbeafdc3c97ebc7105cdcce9
 
 class Firebase {
 	constructor() {
@@ -47,6 +60,7 @@ class Firebase {
 		return new Promise(resolve => {
 			this.auth.onAuthStateChanged(resolve)
 		})
+		
 	}
 
 	getCurrentUsername() {
