@@ -3,13 +3,12 @@ import 'firebase/auth'
 import 'firebase/firebase-firestore'
 
 const config = {
-
-    apiKey: "AIzaSyCy4CEw_-p-zwId4S9lJcPHoS4LfIRF968",
-    authDomain: "courseloop-95744.firebaseapp.com",
-    databaseURL: "https://courseloop-95744.firebaseio.com",
-    projectId: "courseloop-95744",
-    storageBucket: "courseloop-95744.appspot.com",
-    messagingSenderId: "896111699616"
+	apiKey: "AIzaSyCy4CEw_-p-zwId4S9lJcPHoS4LfIRF968",
+	authDomain: "courseloop-95744.firebaseapp.com",
+	databaseURL: "https://courseloop-95744.firebaseio.com",
+	projectId: "courseloop-95744",
+	storageBucket: "courseloop-95744.appspot.com",
+	messagingSenderId: "896111699616"
 }
 
 class Firebase {
@@ -34,6 +33,15 @@ class Firebase {
 		})
 	}
 
+	addQuote(quote) {
+		if(!this.auth.currentUser) {
+			return alert('Not authorized')
+		}
+
+		return this.db.doc(`users/${this.auth.currentUser.uid}`).set({
+			quote
+		})
+	}
 
 	isInitialized() {
 		return new Promise(resolve => {
@@ -46,7 +54,7 @@ class Firebase {
 	}
 
 	async getCurrentUserQuote() {
-		const quote = await this.db.doc(`users_codedamn_video/${this.auth.currentUser.uid}`).get()
+		const quote = await this.db.doc(`users/${this.auth.currentUser.uid}`).get()
 		return quote.get('quote')
 	}
 }

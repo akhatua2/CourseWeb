@@ -1,5 +1,5 @@
-import React from 'react'
-import { Typography, Paper, Avatar, Button } from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
+import { Typography, Paper, Avatar, CircularProgress, Button } from '@material-ui/core'
 import VerifiedUserOutlined from '@material-ui/icons/VerifiedUserOutlined'
 import withStyles from '@material-ui/core/styles/withStyles'
 import firebase from '../firebase'
@@ -36,12 +36,13 @@ const styles = theme => ({
 function Dashboard(props) {
 	const { classes } = props
 
-	if(!firebase.getCurrentUsername()) {
-		// not logged in
-		alert('Please login first')
-		props.history.replace('/login')
-		return null
-	}
+
+
+	const [quote, setQuote] = useState('')
+
+	useEffect(() => {
+		firebase.getCurrentUserQuote().then(setQuote)
+	})
 
 	return (
 		<main className={classes.main}>
@@ -51,6 +52,9 @@ function Dashboard(props) {
 				</Avatar>
 				<Typography component="h1" variant="h5">
 					Hello { firebase.getCurrentUsername() }
+				</Typography>
+				<Typography component="h1" variant="h5">
+					Your quote: {quote ? `"${quote}"` : <CircularProgress size={20} />}
 				</Typography>
 				<Button
 					type="submit"
