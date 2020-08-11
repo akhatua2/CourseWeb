@@ -64,16 +64,6 @@ function HomePage(props) {
 					className={classes.submit}>
 					Login
           		</Button>
-				<Button
-					type="submit"
-					fullWidth
-					variant="contained"
-					color="secondary"
-					component={Link}
-					to="/dashboard"
-					className={classes.submit}>
-					Dashboard
-          		</Button>
 			</Paper>
 		</main>
 	)
