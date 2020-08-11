@@ -2,14 +2,16 @@ import app from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firebase-firestore'
 
-const config = {
-	apiKey: "AIzaSyAk0794OsQuDuoEdUfF9nUM_zD17lfRXEE",
-	authDomain: "codedamn-socialapp.firebaseapp.com",
-	databaseURL: "https://codedamn-socialapp.firebaseio.com",
-	projectId: "codedamn-socialapp",
-	storageBucket: "codedamn-socialapp.appspot.com",
-	messagingSenderId: "263473733320"
-}
+var config = {
+    apiKey: "AIzaSyCy4CEw_-p-zwId4S9lJcPHoS4LfIRF968",
+    authDomain: "courseloop-95744.firebaseapp.com",
+    databaseURL: "https://courseloop-95744.firebaseio.com",
+    projectId: "courseloop-95744",
+    storageBucket: "courseloop-95744.appspot.com",
+	messagingSenderId: "896111699616",
+	appId: "1:896111699616:web:04fbb3a7b2862fe9698bc5",
+    measurementId: "G-1M4NNRSYTF"
+  };
 
 class Firebase {
 	constructor() {
@@ -47,6 +49,7 @@ class Firebase {
 		return new Promise(resolve => {
 			this.auth.onAuthStateChanged(resolve)
 		})
+		
 	}
 
 	getCurrentUsername() {
