@@ -22,7 +22,7 @@ export default function App() {
 	})
 
 
-	return firebaseInitialized === null ? (
+	return firebaseInitialized !== false ? (
 		<MuiThemeProvider theme={theme}>
 			<CssBaseline />
 			<Router>

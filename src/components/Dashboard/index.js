@@ -36,13 +36,13 @@ const styles = theme => ({
 function Dashboard(props) {
 	console.log("Change");
 	const { classes } = props
-	const [quote, setQuote] = useState('')
+	const [country, setCountry] = useState('')
 
 	useEffect(() => {
 		if(firebase.getCurrentUsername()) {
-			firebase.getCurrentUserQuote().then(setQuote)
+			firebase.getCurrentUserCountry().then(setCountry)
 		}
-	}, [firebase.getCurrentUsername(), firebase.getCurrentUserQuote()])
+	}, [firebase.getCurrentUsername(), firebase.getCurrentUserCountry()])
 
 
 
@@ -57,7 +57,7 @@ function Dashboard(props) {
 					Hello { firebase.getCurrentUsername() }
 				</Typography>
 				<Typography component="h1" variant="h5">
-					Your quote: {quote ? `"${quote}"` : <CircularProgress size={20} />}
+					Your Country: {country ? `"${country}"` : <CircularProgress size={20} />}
 				</Typography>
 				<Button
 					type="submit"
