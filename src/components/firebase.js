@@ -34,13 +34,13 @@ class Firebase {
 		})
 	}
 
-	addQuote(quote) {
+	addCountry(country) {
 		if(!this.auth.currentUser) {
 			return alert('Not authorized')
 		}
 
 		return this.db.doc(`users/${this.auth.currentUser.uid}`).set({
-			quote
+			country
 		})
 	}
 
@@ -55,9 +55,9 @@ class Firebase {
 		return this.auth.currentUser && this.auth.currentUser.displayName
 	}
 
-	async getCurrentUserQuote() {
-		const quote = await this.db.doc(`users/${this.auth.currentUser.uid}`).get()
-		return quote.get('quote')
+	async getCurrentUserCountry() {
+		const country = await this.db.doc(`users/${this.auth.currentUser.uid}`).get()
+		return country.get('country')
 	}
 }
 
