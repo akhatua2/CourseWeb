@@ -3,7 +3,8 @@ import { Typography, Paper, Avatar, CircularProgress, Button } from '@material-u
 import VerifiedUserOutlined from '@material-ui/icons/VerifiedUserOutlined'
 import withStyles from '@material-ui/core/styles/withStyles'
 import firebase from '../firebase'
-import { withRouter } from 'react-router-dom'
+import { withRouter, BrowserRouter } from 'react-router-dom'
+import Navbar from './Navbar'
 
 const styles = theme => ({
 	main: {
@@ -49,6 +50,9 @@ function Dashboard(props) {
 
 	return (
 		<main className={classes.main}>
+			<BrowserRouter>
+				<Navbar />
+			</BrowserRouter>	
 			<Paper className={classes.paper}>
 				<Avatar className={classes.avatar}>
 					<VerifiedUserOutlined />
@@ -70,7 +74,7 @@ function Dashboard(props) {
           		</Button>
 			</Paper>
 		</main>
-	)
+	) 
 
 	async function logout() {
 		await firebase.logout()
