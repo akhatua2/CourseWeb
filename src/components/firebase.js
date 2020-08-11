@@ -3,12 +3,13 @@ import 'firebase/auth'
 import 'firebase/firebase-firestore'
 
 const config = {
-	apiKey: "AIzaSyAk0794OsQuDuoEdUfF9nUM_zD17lfRXEE",
-	authDomain: "codedamn-socialapp.firebaseapp.com",
-	databaseURL: "https://codedamn-socialapp.firebaseio.com",
-	projectId: "codedamn-socialapp",
-	storageBucket: "codedamn-socialapp.appspot.com",
-	messagingSenderId: "263473733320"
+
+    apiKey: "AIzaSyCy4CEw_-p-zwId4S9lJcPHoS4LfIRF968",
+    authDomain: "courseloop-95744.firebaseapp.com",
+    databaseURL: "https://courseloop-95744.firebaseio.com",
+    projectId: "courseloop-95744",
+    storageBucket: "courseloop-95744.appspot.com",
+    messagingSenderId: "896111699616"
 }
 
 class Firebase {
@@ -33,15 +34,6 @@ class Firebase {
 		})
 	}
 
-	addQuote(quote) {
-		if(!this.auth.currentUser) {
-			return alert('Not authorized')
-		}
-
-		return this.db.doc(`users_codedamn_video/${this.auth.currentUser.uid}`).set({
-			quote
-		})
-	}
 
 	isInitialized() {
 		return new Promise(resolve => {
