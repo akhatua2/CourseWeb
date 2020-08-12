@@ -81,8 +81,10 @@ function Dashboard(props) {
 			<Assignments />
 			<h3>Your Submissions</h3>
 			<Submissions />
+
 			<h3>FRQ Submission</h3>
-			<Form />
+			<Form frq_id='10'/>
+
 			<h3>Upload Submission</h3>
 			<ImageForm />	
 			<Paper className={classes.paper}>
