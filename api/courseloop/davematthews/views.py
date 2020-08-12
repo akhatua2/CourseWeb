@@ -139,6 +139,56 @@ def get_my_assignments(request):
 
 
 @api_view(['GET'])
+def get_work_due(request):
+    print(request.GET)
+    user_uid = request.GET["user"]
+    print(request.GET["user"])
+
+    all_data = db.child("sandbox").get()
+    filtered_data = []
+    my_classes = []
+    my_assignment_uuids = []
+
+    all_classes = []
+    for entry in all_data.each():
+        if len(entry.key()) < 15:
+            all_classes.append(entry)
+
+    for group in all_classes:
+        details = group.val()
+        students = details["students"]
+        if user_uid in students:
+            my_classes.append(details)
+            my_assignment_uuids += list(details['assignments'])
+
+    print(my_assignment_uuids)
+
+    my_submission_uuids = get_user_submissions(user_uid)
+    for assignment_uuid in my_assignment_uuids:
+        if assignment_uuid not in my_submission_uuids:
+            filtered_data.append(db.child("sandbox").child(assignment_uuid).get().val())
+
+    data = filtered_data
+    return Response(data, status=status.HTTP_200_OK)
+
+
+def get_user_submissions(user_uid):
+    all_data = db.child("sandbox").get()
+    filtered_data = []
+
+    for entry in all_data.each():
+        contents = entry.val()
+        try:
+            if contents["uid"] == user_uid:
+                contents_modded = contents
+                contents_modded["asn_title"] = db.child("sandbox").child(contents["assignment"]).get().val()["title"]
+                filtered_data.append(contents_modded["assignment"])
+        except KeyError:
+            pass
+
+    return filtered_data
+
+@api_view(['GET'])
 def get_my_submissions(request):
     print(request.GET)
     user_uid = request.GET["user"]
@@ -151,15 +201,13 @@ def get_my_submissions(request):
         contents = entry.val()
         try:
             if contents["uid"] == user_uid:
-                print("match found")
 
                 contents_modded = contents
                 contents_modded["asn_title"] = db.child("sandbox").child(contents["assignment"]).get().val()["title"]
                 filtered_data.append(contents_modded)
 
-
         except KeyError:
-            print("no match")
+            pass
 
     data = filtered_data
     return Response(data, status=status.HTTP_200_OK)

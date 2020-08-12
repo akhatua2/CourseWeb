@@ -11,6 +11,7 @@ import ImageForm from './imageform'
 import Submissions from './submissions'
 import Courses from './courses'
 import Assignments from './assignments'
+import WorkDue from './workdue'
 import axios from 'axios'
 
 // var config = {
@@ -74,7 +75,9 @@ function Dashboard(props) {
 			</BrowserRouter>
 			<h3>Your Sections</h3>
 			<Courses />
-			<h3>Your Assignments</h3>
+			<h3>TODO Assignments</h3>
+			<WorkDue />
+			<h3>All Assignments</h3>
 			<Assignments />
 			<h3>Your Submissions</h3>
 			<Submissions />
