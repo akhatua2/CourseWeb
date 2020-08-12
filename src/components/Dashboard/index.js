@@ -5,6 +5,10 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import firebase from '../firebase'
 import { withRouter, BrowserRouter } from 'react-router-dom'
 import Navbar from './Navbar'
+import Form from './form'
+import ImageForm from './imageform'
+import axios from 'axios'
+
 
 const styles = theme => ({
 	main: {
@@ -52,7 +56,9 @@ function Dashboard(props) {
 		<main className={classes.main}>
 			<BrowserRouter>
 				<Navbar />
-			</BrowserRouter>	
+			</BrowserRouter>
+			<Form />
+			<ImageForm />	
 			<Paper className={classes.paper}>
 				<Avatar className={classes.avatar}>
 					<VerifiedUserOutlined />
