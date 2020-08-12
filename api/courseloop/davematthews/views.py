@@ -53,6 +53,7 @@ def ws_grade(request, ws_id):
         print("breh")
         subs_serializer = SubmissionSerializer(data=request.data)
         print(request.data)
+        user = request.data["user"]
         if subs_serializer.is_valid():
             print("breh")
             subs_serializer.save()
@@ -72,7 +73,8 @@ def ws_grade(request, ws_id):
             data = {"assignment": str(latest_sub.ws.uuid),
                     "content": latest_sub.content,
                     "points": latest_sub.points,
-                    "type": "WS",}
+                    "type": "WS",
+                    "uid": user}
 
             db.child("sandbox").child(str(latest_sub.uuid)).set(data)
 
@@ -91,7 +93,7 @@ def frq_grade(request, frq_id):
         print("breh")
 
         print(request.data)
-
+        user = request.data["user"]
         frq_subs_serializer = FrqSubmissionSerializer(data=request.data)
         if frq_subs_serializer.is_valid():
             frq_subs_serializer.save()
@@ -111,7 +113,8 @@ def frq_grade(request, frq_id):
             data = {"assignment": str(latest_sub.frq.uuid),
                     "content": latest_sub.content,
                     "points": latest_sub.points,
-                    "type": "FRQ",}
+                    "type": "FRQ",
+                    "uid": user}
 
             db.child("sandbox").child(str(latest_sub.uuid)).set(data)
 
