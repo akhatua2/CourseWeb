@@ -5,6 +5,7 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import firebase from '../firebase'
 import { withRouter, BrowserRouter } from 'react-router-dom'
 import Navbar from './Navbar'
+import CustomTable from './table'
 import Form from './form'
 import ImageForm from './imageform'
 import axios from 'axios'
@@ -57,6 +58,7 @@ function Dashboard(props) {
 			<BrowserRouter>
 				<Navbar />
 			</BrowserRouter>
+			<CustomTable />
 			<Form />
 			<ImageForm />	
 			<Paper className={classes.paper}>
