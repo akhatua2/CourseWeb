@@ -6,6 +6,12 @@ import firebase from '../firebase'
 
 
 export default class ImageForm extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state.ws_id = props.ws_id;
+  }
+
     state = {
       title: '',
       image: null,
@@ -27,6 +33,8 @@ export default class ImageForm extends React.Component {
 
       if (user) {
         console.log(user.uid);
+        console.log(this.state.ws_id);
+        console.log("http://7d414f476251.ngrok.io/davematthews/grade/ws/" + this.state.ws_id + "/");
 
         const formData = new FormData();
         formData.append('title',this.state.title);
@@ -38,7 +46,7 @@ export default class ImageForm extends React.Component {
           'Content-Type': 'multipart/form-data',
         }
     
-        axios.post(`http://7d414f476251.ngrok.io/davematthews/grade/ws/6/`, formData, { headers: headers})
+        axios.post("http://7d414f476251.ngrok.io/davematthews/grade/ws/" + this.state.ws_id + "/", formData, { headers: headers})
           .then(res => {
             console.log(res);
             console.log(res.data);

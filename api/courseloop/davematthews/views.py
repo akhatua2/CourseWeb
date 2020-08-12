@@ -132,7 +132,14 @@ def get_my_assignments(request):
     print(my_assignment_uuids)
 
     for assignment_uuid in my_assignment_uuids:
-        filtered_data.append(db.child("sandbox").child(assignment_uuid).get().val())
+
+        work = db.child("sandbox").child(assignment_uuid).get().val()
+        if "keywords" in work:
+            work["type"] = "FRQ"
+        else:
+            work["type"] = "WS"
+
+        filtered_data.append(work)
 
     data = filtered_data
     return Response(data, status=status.HTTP_200_OK)
@@ -166,7 +173,14 @@ def get_work_due(request):
     my_submission_uuids = get_user_submissions(user_uid)
     for assignment_uuid in my_assignment_uuids:
         if assignment_uuid not in my_submission_uuids:
-            filtered_data.append(db.child("sandbox").child(assignment_uuid).get().val())
+
+            work = db.child("sandbox").child(assignment_uuid).get().val()
+            if "keywords" in work:
+                work["type"] = "FRQ"
+            else:
+                work["type"] = "WS"
+
+            filtered_data.append(work)
 
     data = filtered_data
     return Response(data, status=status.HTTP_200_OK)

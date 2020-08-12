@@ -41,7 +41,7 @@ export default class WorkDue extends React.Component {
                 <ul>
                     { this.state.assignments.map(assignment => 
                     <li>
-                        {assignment.title} - Total Points: {assignment.total_points} 
+                        ID:{assignment.id} - {assignment.type} - {assignment.title} - Total Points: {assignment.total_points} 
                         <hr></hr>
                     </li>)}
                 </ul>
