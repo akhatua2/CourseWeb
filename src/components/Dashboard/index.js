@@ -50,7 +50,7 @@ function Dashboard(props) {
 	}, [firebase.getCurrentUsername(), firebase.getCurrentUserCountry()])
 
 
-
+	
 
 	return (
 		<main className={classes.main}>

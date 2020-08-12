@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import SignedInLinks from './SignedInLinks'
+import firebase from '../firebase'
 
 
 export default class ImageForm extends React.Component {
@@ -22,19 +23,32 @@ export default class ImageForm extends React.Component {
     handleSubmit = event => {
       event.preventDefault();
 
-      const formData = new FormData();
-      formData.append('title',this.state.title);
-      formData.append('image',this.state.image);
+      var user = firebase.auth.currentUser;
 
-      const headers = {
-        'Content-Type': 'multipart/form-data',
-      }
-  
-      axios.post(`http://7d414f476251.ngrok.io/davematthews/grade/ws/6/`, formData, { headers: headers})
-        .then(res => {
-          console.log(res);
-          console.log(res.data);
+      if (user) {
+        console.log(user.uid);
+
+        const formData = new FormData();
+        formData.append('title',this.state.title);
+        formData.append('image',this.state.image);
+        formData.append('user',user.uid);
+
+
+        const headers = {
+          'Content-Type': 'multipart/form-data',
+        }
+    
+        axios.post(`http://7d414f476251.ngrok.io/davematthews/grade/ws/6/`, formData, { headers: headers})
+          .then(res => {
+            console.log(res);
+            console.log(res.data);
         })
+        
+      } else {
+        console.log("L");
+      }
+
+
     }
   
     render() {

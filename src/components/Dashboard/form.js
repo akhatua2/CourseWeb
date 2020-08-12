@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import SignedInLinks from './SignedInLinks'
+import firebase from '../firebase'
 
 
 export default class Form extends React.Component {
@@ -20,21 +21,31 @@ export default class Form extends React.Component {
   
     handleSubmit = event => {
       event.preventDefault();
-  
-      const submission = {
-        title: this.state.title,
-        content: this.state.content
-      };
 
-      const headers = {
-        'Content-Type': 'application/json',
+      var user = firebase.auth.currentUser;
+
+      if (user) {
+        console.log(user.uid);
+
+        const submission = {
+          title: this.state.title,
+          content: this.state.content,
+          user: user.uid,
+        };
+  
+        const headers = {
+          'Content-Type': 'application/json',
+        }
+    
+        axios.post(`http://7d414f476251.ngrok.io/davematthews/grade/frq/11/`, submission, { headers: headers})
+          .then(res => {
+            console.log(res);
+            console.log(res.data);
+          })
+      } else {
+        console.log("L");
       }
   
-      axios.post(`http://7d414f476251.ngrok.io/davematthews/grade/frq/11/`, submission, { headers: headers})
-        .then(res => {
-          console.log(res);
-          console.log(res.data);
-        })
     }
   
     render() {
