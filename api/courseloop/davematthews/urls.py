@@ -11,9 +11,15 @@ urlpatterns = [
     path('grade/frq/<int:frq_id>/', views.frq_grade, name='frqgrade'),
     path('grade/ws/<int:ws_id>/', views.ws_grade, name='wsgrade'),
 
-    path('submissions/', views.SubmissionView.as_view(), name='subs_list'),
+    path('wssubmissions/', views.SubmissionView.as_view(), name='subs_list'),
     path('frqsubmissions/', views.FrqSubmissionView.as_view(), name='frq_subs_list'),
 
     path('worksheets/', views.WsAssignmentView.as_view(), name='ws_assignments_list'),
     path('frqs/', views.FrqAssignmentView.as_view(), name='frq_assignments_list'),
+
+    path('submissions/', views.get_my_submissions, name='submissions'),
+    path('courses/', views.get_my_courses, name='courses'),
+    path('assignments/', views.get_my_assignments, name='assignments'),
+    path('workdue/', views.get_work_due, name='get_work_due'),
+
 ]
