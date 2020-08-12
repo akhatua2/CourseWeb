@@ -82,6 +82,89 @@ def ws_grade(request, ws_id):
     return HttpResponse("Something broke!")
 
 
+@api_view(['GET'])
+def get_my_courses(request):
+    print(request.GET)
+    user_uid = request.GET["user"]
+    print(request.GET["user"])
+
+    all_data = db.child("sandbox").get()
+    filtered_data = []
+
+    classes = []
+    for entry in all_data.each():
+        if len(entry.key()) < 15:
+            classes.append(entry)
+
+    for group in classes:
+        details = group.val()
+        students = details["students"]
+        if user_uid in students:
+            filtered_data.append(details)
+
+    data = filtered_data
+    return Response(data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def get_my_assignments(request):
+    print(request.GET)
+    user_uid = request.GET["user"]
+    print(request.GET["user"])
+
+    all_data = db.child("sandbox").get()
+    filtered_data = []
+    my_classes = []
+    my_assignment_uuids = []
+
+    all_classes = []
+    for entry in all_data.each():
+        if len(entry.key()) < 15:
+            all_classes.append(entry)
+
+    for group in all_classes:
+        details = group.val()
+        students = details["students"]
+        if user_uid in students:
+            my_classes.append(details)
+            my_assignment_uuids += list(details['assignments'])
+
+    print(my_assignment_uuids)
+
+    for assignment_uuid in my_assignment_uuids:
+        filtered_data.append(db.child("sandbox").child(assignment_uuid).get().val())
+
+    data = filtered_data
+    return Response(data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def get_my_submissions(request):
+    print(request.GET)
+    user_uid = request.GET["user"]
+    print(request.GET["user"])
+
+    all_data = db.child("sandbox").get()
+    filtered_data = []
+
+    for entry in all_data.each():
+        contents = entry.val()
+        try:
+            if contents["uid"] == user_uid:
+                print("match found")
+
+                contents_modded = contents
+                contents_modded["asn_title"] = db.child("sandbox").child(contents["assignment"]).get().val()["title"]
+                filtered_data.append(contents_modded)
+
+
+        except KeyError:
+            print("no match")
+
+    data = filtered_data
+    return Response(data, status=status.HTTP_200_OK)
+
+
 # create frq submission + grades + updates firebase DB
 @api_view(['POST'])
 def frq_grade(request, frq_id):

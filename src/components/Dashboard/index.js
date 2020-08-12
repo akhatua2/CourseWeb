@@ -7,8 +7,21 @@ import { withRouter, BrowserRouter } from 'react-router-dom'
 import Navbar from './Navbar'
 import Form from './form'
 import ImageForm from './imageform'
+import Submissions from './submissions'
+import Courses from './courses'
+import Assignments from './assignments'
 import axios from 'axios'
 
+// var config = {
+//     apiKey: "AIzaSyCy4CEw_-p-zwId4S9lJcPHoS4LfIRF968",
+//     authDomain: "courseloop-95744.firebaseapp.com",
+//     databaseURL: "https://courseloop-95744.firebaseio.com",
+//     projectId: "courseloop-95744",
+//     storageBucket: "courseloop-95744.appspot.com",
+//     messagingSenderId: "896111699616",
+//     appId: "1:896111699616:web:04fbb3a7b2862fe9698bc5",
+//     measurementId: "G-1M4NNRSYTF"
+//   };
 
 const styles = theme => ({
 	main: {
@@ -39,6 +52,7 @@ const styles = theme => ({
 })
 
 function Dashboard(props) {
+
 	console.log("Change");
 	const { classes } = props
 	const [country, setCountry] = useState('')
@@ -50,14 +64,22 @@ function Dashboard(props) {
 	}, [firebase.getCurrentUsername(), firebase.getCurrentUserCountry()])
 
 
-	
+
 
 	return (
 		<main className={classes.main}>
 			<BrowserRouter>
 				<Navbar />
 			</BrowserRouter>
+			<h3>Your Sections</h3>
+			<Courses />
+			<h3>Your Assignments</h3>
+			<Assignments />
+			<h3>Your Submissions</h3>
+			<Submissions />
+			<h3>FRQ Submission</h3>
 			<Form />
+			<h3>Upload Submission</h3>
 			<ImageForm />	
 			<Paper className={classes.paper}>
 				<Avatar className={classes.avatar}>
@@ -66,9 +88,7 @@ function Dashboard(props) {
 				<Typography component="h1" variant="h5">
 					Hello { firebase.getCurrentUsername() }
 				</Typography>
-				<Typography component="h1" variant="h5">
-					Your Country: {country ? `"${country}"` : <CircularProgress size={20} />}
-				</Typography>
+
 				<Button
 					type="submit"
 					fullWidth
