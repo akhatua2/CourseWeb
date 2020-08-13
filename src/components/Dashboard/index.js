@@ -12,6 +12,7 @@ import Submissions from './submissions'
 import Courses from './courses'
 import Assignments from './assignments'
 import WorkDue from './workdue'
+import MyGrade from './mygrade'
 import axios from 'axios'
 
 // var config = {
@@ -73,6 +74,9 @@ function Dashboard(props) {
 			<BrowserRouter>
 				<Navbar />
 			</BrowserRouter>
+
+			<MyGrade />
+			
 			<h3>Your Sections</h3>
 			<Courses />
 			<h3>TODO Assignments</h3>

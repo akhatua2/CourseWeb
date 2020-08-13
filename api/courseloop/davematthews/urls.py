@@ -22,4 +22,6 @@ urlpatterns = [
     path('assignments/', views.get_my_assignments, name='assignments'),
     path('workdue/', views.get_work_due, name='get_work_due'),
 
+    path('grade/', views.grade, name='grade')
+
 ]

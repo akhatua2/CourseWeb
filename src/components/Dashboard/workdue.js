@@ -46,13 +46,7 @@ export default class WorkDue extends React.Component {
                     <li>
                         ID:{assignment.id} - {assignment.type} - {assignment.title} - Total Points: {assignment.total_points} 
                         {assignment.type === 'FRQ' ? (<Form frq_id={assignment.id.toString()}/>) : 
-                            (<ImageForm ws_id={assignment.id.toString()}/>) }
-                        
-{/*                         
-                        if {assignment.type.toString()} == 'FRQ':
-                            <Form frq_id={assignment.id.toString()}/>
-                        else:
-                            <ImageForm ws_id={assignment.id.toString()}/> */}
+                            (<ImageForm ws_id={assignment.id.toString()}/>)}
                         <hr></hr>
                     </li>)}
                 </ul>

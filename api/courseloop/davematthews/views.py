@@ -202,6 +202,32 @@ def get_user_submissions(user_uid):
 
     return filtered_data
 
+
+@api_view(['GET'])
+def grade(request):
+    print(request.GET)
+    user_uid = request.GET["user"]
+    print(request.GET["user"])
+
+    all_data = db.child("sandbox").get()
+    my_points = 0
+    total_points = 0
+
+    for entry in all_data.each():
+        contents = entry.val()
+        try:
+            if contents["uid"] == user_uid:
+                my_points += contents["points"]
+                total_points += db.child("sandbox").child(contents["assignment"]).get().val()["total_points"]
+
+        except KeyError:
+            pass
+
+    grade = round(my_points/total_points, 3)
+    data = {"grade": grade, "my_points":my_points, "total_points":total_points}
+    return Response(data, status=status.HTTP_200_OK)
+
+
 @api_view(['GET'])
 def get_my_submissions(request):
     print(request.GET)
