@@ -72,12 +72,14 @@ export default class ImageForm extends React.Component {
             <label class="required" for="id_image">Image:</label>
             <input type="file" name="image" accept="image/*" required="" id="id_image" onChange={this.handleImageChange}/>
 
+            <div style={{textAlign: 'right', alignSelf: 'stretch'}}>
             <Button
               type="submit"
               color="secondary"
               variant="contained">
               Submit
           	</Button>
+            </div>
             {/* <button type="submit">Submit</button> */}
 
           </form>

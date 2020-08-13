@@ -16,6 +16,8 @@ import pytesseract
 from uuid import uuid4
 
 import pyrebase
+from gensim import corpora, models, similarities
+import jieba
 
 config = {
   "apiKey": "AIzaSyCy4CEw_-p-zwId4S9lJcPHoS4LfIRF968",
@@ -257,6 +259,28 @@ def get_my_submissions(request):
     return Response(data, status=status.HTTP_200_OK)
 
 
+def auto_grade_frq(frq_text, keywords, total_points):
+    grade = total_points
+    texts = [frq_text, "eeeeee"]
+    keyword = keywords
+
+    print(texts[0])
+    print(keyword)
+
+    texts = [jieba.lcut(text) for text in texts]
+    dictionary = corpora.Dictionary(texts)
+    feature_cnt = len(dictionary.token2id)
+    corpus = [dictionary.doc2bow(text) for text in texts]
+    tfidf = models.TfidfModel(corpus)
+    kw_vector = dictionary.doc2bow(jieba.lcut(keyword))
+    index = similarities.SparseMatrixSimilarity(tfidf[corpus], num_features=feature_cnt)
+    sim = index[tfidf[kw_vector]]
+    for i in range(len(sim)):
+        print('keyword is similar to text%d: %.2f' % (i + 1, sim[i]))
+
+    scaler = sim[0]
+    return round(scaler*grade, 3)
+
 # create frq submission + grades + updates firebase DB
 @api_view(['POST'])
 def frq_grade(request, frq_id):
@@ -279,11 +303,17 @@ def frq_grade(request, frq_id):
             latest_sub.frq = FrqAssignment.objects.get(id=frq_id)
             print("hello")
             latest_sub.uuid = uuid4()
-            # grade = auto_grade_frq(latest_sub.content)
             latest_sub.save()
 
-            print(latest_sub.frq.uuid)
-            print({"assignment": latest_sub.frq.uuid, "content": latest_sub.content, "points": latest_sub.points})
+            total_points = db.child("sandbox").child(str(latest_sub.frq.uuid)).get().val()["total_points"]
+            print(total_points)
+            keywords = db.child("sandbox").child(str(latest_sub.frq.uuid)).get().val()["keywords"]
+            grade = auto_grade_frq(latest_sub.content, keywords, total_points)
+            print(grade)
+            latest_sub.points = grade
+            latest_sub.save()
+
+            print({"assignment": latest_sub.frq.uuid, "content": latest_sub.content, "points": grade})
 
             data = {"assignment": str(latest_sub.frq.uuid),
                     "content": latest_sub.content,
