@@ -15,16 +15,7 @@ import WorkDue from './workdue'
 import MyGrade from './mygrade'
 import axios from 'axios'
 
-// var config = {
-//     apiKey: "AIzaSyCy4CEw_-p-zwId4S9lJcPHoS4LfIRF968",
-//     authDomain: "courseloop-95744.firebaseapp.com",
-//     databaseURL: "https://courseloop-95744.firebaseio.com",
-//     projectId: "courseloop-95744",
-//     storageBucket: "courseloop-95744.appspot.com",
-//     messagingSenderId: "896111699616",
-//     appId: "1:896111699616:web:04fbb3a7b2862fe9698bc5",
-//     measurementId: "G-1M4NNRSYTF"
-//   };
+
 
 const styles = theme => ({
 	main: {
@@ -79,7 +70,6 @@ function Dashboard(props) {
 				type="submit"
 				fullWidth
 				variant="contained"
-				color="secondary"
 				onClick={logout}
 				className={classes.submit}>
 				Logout

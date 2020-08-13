@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import SignedInLinks from './SignedInLinks'
 import firebase from '../firebase'
+import { Typography, Paper, Avatar, CircularProgress, Button } from '@material-ui/core'
 
 
 export default class ImageForm extends React.Component {
@@ -67,11 +68,17 @@ export default class ImageForm extends React.Component {
       return (
         <div>
           <form onSubmit={this.handleSubmit}>
-            
+
             <label class="required" for="id_image">Image:</label>
             <input type="file" name="image" accept="image/*" required="" id="id_image" onChange={this.handleImageChange}/>
 
-            <button type="submit">Submit</button>
+            <Button
+              type="submit"
+              color="secondary"
+              variant="contained">
+              Submit
+          	</Button>
+            {/* <button type="submit">Submit</button> */}
 
           </form>
         </div>

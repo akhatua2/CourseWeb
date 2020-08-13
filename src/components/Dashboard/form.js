@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import SignedInLinks from './SignedInLinks'
 import firebase from '../firebase'
-
+import { Typography, Paper, Avatar, CircularProgress, Button } from '@material-ui/core'
 
 export default class Form extends React.Component {
 
@@ -74,7 +74,16 @@ export default class Form extends React.Component {
             <label class="required" for="id_content">Content:</label>
             <textarea name="content" cols="40" rows="10" class="vLargeTextField" required="" id="id_content" onChange={this.handleContentChange}></textarea>
 
-            <button type="submit">Submit</button>
+            <div style={{textAlign: 'right', alignSelf: 'stretch'}}>
+            <Button
+              type="submit"
+              color="secondary"
+              variant="contained">
+              Submit
+          	</Button>
+            </div>
+
+            {/* <button type="submit">Submit</button> */}
 
           </form>
         </div>
