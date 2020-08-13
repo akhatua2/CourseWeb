@@ -70,28 +70,50 @@ function Dashboard(props) {
 
 
 	return (
-		<main className={classes.main}>
+		<main className={classes.main} style={{ paddingBottom: 200 }}>
 			<BrowserRouter>
 				<Navbar />
 			</BrowserRouter>
 
+			<Button
+				type="submit"
+				fullWidth
+				variant="contained"
+				color="secondary"
+				onClick={logout}
+				className={classes.submit}>
+				Logout
+          	</Button>
+
+			<div style={{ marginTop: 30, marginBottom: -10 }}>
+				<h6>Welcome, { firebase.getCurrentUsername() }</h6>
+			</div>
+
 			<MyGrade />
 
-			<h3>Your Sections</h3>
-			<Courses />
-			<h3>TODO Assignments</h3>
-			<WorkDue />
-			<h3>All Assignments</h3>
-			<Assignments />
-			<h3>Your Submissions</h3>
-			<Submissions />
+			<div style={{ marginTop: 40}}>
+				<h5><strong>Your Sections</strong></h5>
+				<Courses />
+			</div>
+
+			<div style={{ marginTop: 40}}>
+				<h5><strong>TODO Assignments</strong></h5>
+				<WorkDue />
+			</div>
+
+			{/* <h3>All Assignments</h3>
+			<Assignments /> */}
+			<div style={{ marginTop: 40}}>
+				<h5><strong>Your Submissions</strong></h5>
+				<Submissions />
+			</div>
 
 			{/* <h3>FRQ Submission</h3>
 			<Form frq_id='10'/>
 
 			<h3>Upload Submission</h3>
 			<ImageForm ws_id='6'/>	 */}
-			<Paper className={classes.paper}>
+			{/* <Paper className={classes.paper}>
 				<Avatar className={classes.avatar}>
 					<VerifiedUserOutlined />
 				</Avatar>
@@ -99,16 +121,7 @@ function Dashboard(props) {
 					Hello { firebase.getCurrentUsername() }
 				</Typography>
 
-				<Button
-					type="submit"
-					fullWidth
-					variant="contained"
-					color="secondary"
-					onClick={logout}
-					className={classes.submit}>
-					Logout
-          		</Button>
-			</Paper>
+			</Paper> */}
 		</main>
 	) 
 

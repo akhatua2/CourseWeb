@@ -43,11 +43,12 @@ export default class WorkDue extends React.Component {
             <div>
                 <ul>
                     { this.state.assignments.map(assignment => 
-                    <li>
-                        {assignment.title} (Possible Points: {assignment.total_points})
+                    <li style = {{ marginBottom : 15, }} >
+                        <hr style = {{ marginBottom: 15, }}></hr>
+                        <b>{assignment.title}</b> (Possible Points: {assignment.total_points})
                         {assignment.type === 'FRQ' ? (<Form frq_id={assignment.id.toString()}/>) : 
                             (<ImageForm ws_id={assignment.id.toString()}/>)}
-                        <hr></hr>
+        
                     </li>)}
                 </ul>
             </div>

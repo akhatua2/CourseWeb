@@ -40,12 +40,12 @@ export default class Submissions extends React.Component {
             <div>
                 <ul>
                     { this.state.submissions.map(submission => 
-                    <li>
-                        {submission.asn_title} - {submission.points} points 
+                    <li style = {{ marginBottom : 15, }} >
+                        <hr style = {{ marginBottom: 15, }}></hr>
+                        <b>{submission.asn_title}</b> - {submission.points} points 
                         <div>
                             {submission.content}
                         </div>
-                        <hr></hr>
                     </li>)}
                 </ul>
             </div>

@@ -38,7 +38,8 @@ export default class MyGrade extends React.Component {
     render() {
         return (
             <div>
-                <h3>{this.state.grade.grade}%</h3>
+                <h5>Current grade: <b>{this.state.grade.grade}%</b></h5>
+                <hr style = {{ marginBottom: 15, }}></hr>
             </div>
         )
     }
