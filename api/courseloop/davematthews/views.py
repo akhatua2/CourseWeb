@@ -92,12 +92,53 @@ def ws_grade(request, ws_id):
     return HttpResponse("Something broke!")
 
 
+@api_view(['POST'])
+def add_course(request):
+    if request.method == 'POST':
+        user = request.data["user"]
+        section_id = request.data["section"]
+
+        data = {user: "student"}
+        db.child("sandbox").child(section_id).child("students").update(data)
+        return Response(data, status=status.HTTP_201_CREATED)
+    return HttpResponse("Something broke!")
+
+
+@api_view(['POST'])
+def remove_course(request):
+    if request.method == 'POST':
+        user = request.data["user"]
+        section_id = request.data["section"]
+
+        data = {user: "student"}
+        db.child("sandbox").child(section_id).child("students").child(user).remove()
+        return Response(data, status=status.HTTP_201_CREATED)
+    return HttpResponse("Something broke!")
+
+
+@api_view(['GET'])
+def all_courses(request):
+
+    all_data = db.child("sandbox").get()
+    filtered_data = []
+
+    classes = []
+    for entry in all_data.each():
+        if len(entry.key()) < 15:
+            classes.append(entry.val())
+
+    data = classes
+    print(data)
+    return Response(data, status=status.HTTP_200_OK)
+
+
+
 @api_view(['GET'])
 def get_my_courses(request):
+
     print(request.GET)
     user_uid = request.GET["user"]
     print(request.GET["user"])
-
     all_data = db.child("sandbox").get()
     filtered_data = []
 
@@ -114,6 +155,8 @@ def get_my_courses(request):
 
     data = filtered_data
     return Response(data, status=status.HTTP_200_OK)
+
+
 
 
 @api_view(['GET'])
@@ -276,7 +319,7 @@ def get_my_submissions(request):
 
 def auto_grade(frq_text, keywords, total_points):
     grade = total_points
-    texts = [frq_text, "eeeeee"]
+    texts = [frq_text, ""]
     keyword = keywords
 
     print(texts[0])

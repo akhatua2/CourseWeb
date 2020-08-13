@@ -22,6 +22,10 @@ urlpatterns = [
     path('assignments/', views.get_my_assignments, name='assignments'),
     path('workdue/', views.get_work_due, name='get_work_due'),
 
-    path('grade/', views.grade, name='grade')
+    path('grade/', views.grade, name='grade'),
+
+    path('allcourses/', views.all_courses, name='all_courses'),
+    path('add/', views.add_course, name='add'),
+    path('remove/', views.remove_course, name='remove'),
 
 ]
