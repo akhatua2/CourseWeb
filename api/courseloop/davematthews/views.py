@@ -307,7 +307,7 @@ def section_grade(request):
         possible_points += db.child("sandbox").child(submission["assignment"]).get().val()["total_points"]
 
     if possible_points == 0:
-        my_section_grade = 0.0
+        my_section_grade = 100.0
     else:
         my_section_grade = round(100 * (my_points / possible_points), 3)
 
