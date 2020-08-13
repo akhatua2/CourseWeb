@@ -54,11 +54,6 @@ class Firebase {
 	getCurrentUsername() {
 		return this.auth.currentUser && this.auth.currentUser.displayName
 	}
-
-	async getCurrentUserCountry() {
-		const country = await this.db.doc(`users/${this.auth.currentUser.uid}`).get()
-		return country.get('country')
-	}
 }
 
 export default new Firebase()

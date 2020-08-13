@@ -5,17 +5,9 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import firebase from '../firebase'
 import { withRouter, BrowserRouter } from 'react-router-dom'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import Navbar from './Navbar'
 // import CustomTable from './table'
-import Form from './form'
-import ImageForm from './imageform'
-import Submissions from './submissions'
-import Courses from './courses'
-import Assignments from './assignments'
-import WorkDue from './workdue'
-import MyGrade from './mygrade'
-import SectionGrade from './sectiongrade'
-import GradeDist from '../GradePage'
+// import MyGrade from './mygrade'
+// import GradeDist from '../GradePage'
 import axios from 'axios'
 
 
@@ -48,7 +40,7 @@ const styles = theme => ({
 	},
 })
 
-function Dashboard(props) {
+function GradeDist(props) {
 
 	console.log("Change");
 	const { classes } = props
@@ -60,13 +52,9 @@ function Dashboard(props) {
 	// 	}
 	// }, [firebase.getCurrentUsername(), firebase.getCurrentUserCountry()])
 
-
-
-
 	return (
 		<main className={classes.main} style={{ paddingBottom: 200 }}>
 			<BrowserRouter>
-				<Navbar />
 			</BrowserRouter>
 
 			<Button
@@ -82,16 +70,16 @@ function Dashboard(props) {
 				<h6>Welcome, { firebase.getCurrentUsername() }</h6>
 			</div>
 
-			<MyGrade />
+			{/* <MyGrade /> */}
 			<Button
 				type="submit"
 				fullWidth
 				variant="contained"
-				onClick={gradedist}
+				onClick={dashreturn}
 				className={classes.submit}>
-				More Grades!
+				Back to Dashboard!
           	</Button>
-
+{/* 
 			<div style={{ marginTop: 40}}>
 				<h5><strong>Your Sections</strong></h5>
 				<Courses />
@@ -104,16 +92,10 @@ function Dashboard(props) {
 
 			{/* <h3>All Assignments</h3>
 			<Assignments /> */}
-			<div style={{ marginTop: 40}}>
+			{/* <div style={{ marginTop: 40}}>
 				<h5><strong>Your Submissions</strong></h5>
 				<Submissions />
-			</div>
-
-			<Router>
-				<Switch>
-					<Route exact path="/gradedist" component={GradeDist} />
-				</Switch>
-			</Router>
+			</div> */}
 
 			{/* <h3>FRQ Submission</h3>
 			<Form frq_id='10'/>
@@ -137,14 +119,21 @@ function Dashboard(props) {
 		props.history.push('/')
 	}
 
-	async function gradedist() {
+	async function dashreturn() {
 		try {
-			// await firebase.login(email, password)
-			props.history.replace('/gradedist')
+            console.log("BACKK")
+            if(firebase.auth.currentUser != null) {
+                console.log("WOOOOOO")
+                props.history.replace('/dashboard')
+            }
+            else {
+                props.history.push('/')
+            }
 		} catch(error) {
+            console.log("BACKK  BABYYYY")
 			alert(error.message)
 		}
 	}
 }
 
-export default withRouter(withStyles(styles)(Dashboard))
+export default withRouter(withStyles(styles)(GradeDist))
