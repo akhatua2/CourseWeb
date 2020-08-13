@@ -72,9 +72,17 @@ def ws_grade(request, ws_id):
             print("breh")
             latest_sub.save()
 
+            total_points = db.child("sandbox").child(str(latest_sub.ws.uuid)).get().val()["total_points"]
+            print(total_points)
+            keywords = db.child("sandbox").child(str(latest_sub.ws.uuid)).get().val()["answers"]
+            grade = auto_grade(latest_sub.content, keywords, total_points)
+            print(grade)
+            latest_sub.points = grade
+            latest_sub.save()
+
             data = {"assignment": str(latest_sub.ws.uuid),
                     "content": latest_sub.content,
-                    "points": latest_sub.points,
+                    "points": grade,
                     "type": "WS",
                     "uid": user}
 
@@ -175,7 +183,7 @@ def get_work_due(request):
     my_submission_uuids = get_user_submissions(user_uid)
     for assignment_uuid in my_assignment_uuids:
         if assignment_uuid not in my_submission_uuids:
-
+            print(assignment_uuid)
             work = db.child("sandbox").child(assignment_uuid).get().val()
             if "keywords" in work:
                 work["type"] = "FRQ"
@@ -225,10 +233,17 @@ def grade(request):
         except KeyError:
             pass
 
+    print()
+    print()
+    print(my_points)
+    print(total_points)
+    print()
+    print()
+
     if total_points == 0:
         my_grade = 0
     else:
-        my_grade = round(my_points/total_points, 3)
+        my_grade = round((my_points/total_points)*100.0, 3)
 
     data = {"grade": my_grade, "my_points":my_points, "total_points":total_points}
     return Response(data, status=status.HTTP_200_OK)
@@ -259,7 +274,7 @@ def get_my_submissions(request):
     return Response(data, status=status.HTTP_200_OK)
 
 
-def auto_grade_frq(frq_text, keywords, total_points):
+def auto_grade(frq_text, keywords, total_points):
     grade = total_points
     texts = [frq_text, "eeeeee"]
     keyword = keywords
@@ -308,7 +323,7 @@ def frq_grade(request, frq_id):
             total_points = db.child("sandbox").child(str(latest_sub.frq.uuid)).get().val()["total_points"]
             print(total_points)
             keywords = db.child("sandbox").child(str(latest_sub.frq.uuid)).get().val()["keywords"]
-            grade = auto_grade_frq(latest_sub.content, keywords, total_points)
+            grade = auto_grade(latest_sub.content, keywords, total_points)
             print(grade)
             latest_sub.points = grade
             latest_sub.save()
@@ -317,7 +332,7 @@ def frq_grade(request, frq_id):
 
             data = {"assignment": str(latest_sub.frq.uuid),
                     "content": latest_sub.content,
-                    "points": latest_sub.points,
+                    "points": grade,
                     "type": "FRQ",
                     "uid": user}
 

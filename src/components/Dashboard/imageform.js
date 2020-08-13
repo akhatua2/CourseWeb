@@ -55,7 +55,7 @@ export default class ImageForm extends React.Component {
           .then(res => {
             console.log(res);
             console.log(res.data);
-        })
+        }).then(this.reloadTheThing)
         
       } else {
         console.log("L");
