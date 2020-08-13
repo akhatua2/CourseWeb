@@ -28,4 +28,8 @@ urlpatterns = [
     path('add/', views.add_course, name='add'),
     path('remove/', views.remove_course, name='remove'),
 
+    path('sectionsubmissions/', views.section_submissions, name='section_submissions'),
+    path('sectionassignments/', views.section_assignments, name='section_assignments'),
+    path('sectiongrade/', views.section_grade, name='section_grade'),
+
 ]

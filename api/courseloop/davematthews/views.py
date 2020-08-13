@@ -256,6 +256,65 @@ def get_user_submissions(user_uid):
     return filtered_data
 
 
+def get_section_submissions(user_uid, section_id):
+    all_data = db.child("sandbox").get()
+
+    section_assignments = db.child("sandbox").child(section_id).child("assignments").get().val()
+
+    my_section_submissions = []
+    for entry in all_data.each():
+        contents = entry.val()
+        try:
+            if contents["uid"] == user_uid and contents["assignment"] in section_assignments:
+                my_section_submissions.append(contents)
+
+        except KeyError:
+            pass
+
+    return my_section_submissions
+
+
+def get_section_assignments(section_id):
+    section_assignments = db.child("sandbox").child(section_id).child("assignments").get().val()
+    return section_assignments
+
+
+@api_view(["GET"])
+def section_assignments(request):
+    section_id = request.GET["section"]
+    my_section_assignments = get_section_assignments(section_id)
+    return Response(my_section_assignments, status=status.HTTP_200_OK)
+
+
+@api_view(["GET"])
+def section_submissions(request):
+    user_uid = request.GET["user"]
+    section_id = request.GET["section"]
+    my_section_submissions = get_section_submissions(user_uid, section_id)
+    return Response(my_section_submissions, status=status.HTTP_200_OK)
+
+@api_view(["GET"])
+def section_grade(request):
+    user_uid = request.GET["user"]
+    section_id = request.GET["section"]
+    my_section_submissions = get_section_submissions(user_uid, section_id)
+
+    my_points = 0
+    possible_points = 0
+
+    for submission in my_section_submissions:
+        my_points += submission["points"]
+        possible_points += db.child("sandbox").child(submission["assignment"]).get().val()["total_points"]
+
+    if possible_points == 0:
+        my_section_grade = 0.0
+    else:
+        my_section_grade = round(100 * (my_points / possible_points), 3)
+
+    data = {"section": section_id, "grade":my_section_grade}
+    return Response(data, status=status.HTTP_200_OK)
+
+
 @api_view(['GET'])
 def grade(request):
     print(request.GET)
