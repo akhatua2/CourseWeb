@@ -80,6 +80,14 @@ function Dashboard(props) {
 			</div>
 
 			<MyGrade />
+			<Button
+				type="submit"
+				fullWidth
+				variant="contained"
+				onClick={gradedist}
+				className={classes.submit}>
+				More Grades!
+          	</Button>
 
 			<div style={{ marginTop: 40}}>
 				<h5><strong>Your Sections</strong></h5>
@@ -116,6 +124,11 @@ function Dashboard(props) {
 	) 
 
 	async function logout() {
+		await firebase.logout()
+		props.history.push('/')
+	}
+
+	async function gradedist() {
 		await firebase.logout()
 		props.history.push('/')
 	}
