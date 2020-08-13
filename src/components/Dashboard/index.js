@@ -13,6 +13,7 @@ import Courses from './courses'
 import Assignments from './assignments'
 import WorkDue from './workdue'
 import MyGrade from './mygrade'
+import SectionGrade from './sectiongrade'
 import axios from 'axios'
 
 

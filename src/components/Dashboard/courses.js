@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import SignedInLinks from './SignedInLinks'
 import firebase from '../firebase'
+import SectionGrade from './sectiongrade'
 
 export default class Courses extends React.Component {
     state = {
@@ -26,9 +27,11 @@ export default class Courses extends React.Component {
     
             axios.get(`http://7d414f476251.ngrok.io/davematthews/courses/`, { params: get_body}, { headers: headers})
             .then(res => {
-                console.log(res.data)
                 const courses = res.data;
-                this.setState({ courses });
+                console.log("BSDJFLSADJFLKSJADLFKJSDJK")
+                console.log(courses);
+                // this.state.courses = courses;
+                this.setState({courses});
             })
 
         }
@@ -41,8 +44,11 @@ export default class Courses extends React.Component {
                 <ul>
                     { this.state.courses.map(course => 
                     <li>
-                        {course.course} - Section {course.section} 
                         <hr></hr>
+                        <h6>{course.course} - <i>Section {course.section}</i></h6>
+                        <div style={{ marginTop: -7.5, marginBottom: 10 }}>
+                            <SectionGrade section_id={course.id}/>
+                        </div>
                     </li>)}
                 </ul>
             </div>
