@@ -24,7 +24,7 @@ export default class MyGrade extends React.Component {
                 'Content-Type': 'application/json',
             }
     
-            axios.get(`http://7d414f476251.ngrok.io/davematthews/grade/`, { params: get_body}, { headers: headers})
+            axios.get(`http://059ed99e2114.ngrok.io/davematthews/grade/`, { params: get_body}, { headers: headers})
             .then(res => {
                 console.log(res.data)
                 const grade = res.data;
