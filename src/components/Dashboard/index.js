@@ -76,7 +76,7 @@ function Dashboard(props) {
 			</BrowserRouter>
 
 			<MyGrade />
-			
+
 			<h3>Your Sections</h3>
 			<Courses />
 			<h3>TODO Assignments</h3>
@@ -86,11 +86,11 @@ function Dashboard(props) {
 			<h3>Your Submissions</h3>
 			<Submissions />
 
-			<h3>FRQ Submission</h3>
+			{/* <h3>FRQ Submission</h3>
 			<Form frq_id='10'/>
 
 			<h3>Upload Submission</h3>
-			<ImageForm ws_id='6'/>	
+			<ImageForm ws_id='6'/>	 */}
 			<Paper className={classes.paper}>
 				<Avatar className={classes.avatar}>
 					<VerifiedUserOutlined />

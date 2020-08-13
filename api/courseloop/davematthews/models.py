@@ -29,7 +29,7 @@ class WsAssignment(models.Model):
 
 class Submission(models.Model):
     uuid = models.UUIDField(default=uuid4())
-    ws = models.ForeignKey(WsAssignment, on_delete=models.CASCADE, blank=True, default=6)
+    ws = models.ForeignKey(WsAssignment, on_delete=models.CASCADE, blank=True, default=10)
     title = models.CharField(max_length=100)
     points = models.IntegerField(default=0)
     image = models.ImageField(upload_to='post_images')
@@ -41,7 +41,7 @@ class Submission(models.Model):
 
 class FrqSubmission(models.Model):
     uuid = models.UUIDField(default=uuid4())
-    frq = models.ForeignKey(FrqAssignment, on_delete=models.CASCADE, blank=True, default=9)
+    frq = models.ForeignKey(FrqAssignment, on_delete=models.CASCADE, blank=True, default=13)
     title = models.CharField(max_length=100)
     points = models.IntegerField(default=0)
     content = models.TextField(default="-")

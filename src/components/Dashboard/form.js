@@ -13,8 +13,12 @@ export default class Form extends React.Component {
     }
 
     state = {
-      title: '',
+      title: 'def',
       content: '',
+    }
+
+    reloadTheThing() {
+      window.location.reload();
     }
   
     handleTitleChange = event => {
@@ -23,7 +27,7 @@ export default class Form extends React.Component {
 
     handleContentChange = event => {
         this.setState({ content: event.target.value });
-      }
+    }
   
     handleSubmit = event => {
       event.preventDefault();
@@ -49,7 +53,9 @@ export default class Form extends React.Component {
           .then(res => {
             console.log(res);
             console.log(res.data);
-          })
+          }).then(this.reloadTheThing)
+
+
       } else {
         console.log("L");
       }
@@ -62,8 +68,8 @@ export default class Form extends React.Component {
         <div>
           <form onSubmit={this.handleSubmit}>
 
-            <label class="required" for="id_title">Title:</label>
-            <input type="text" name="title" class="vTextField" maxlength="100" required="" id="id_title" onChange={this.handleTitleChange}/>
+            {/* <label class="required" for="id_title">Title:</label>
+            <input type="text" name="title" class="vTextField" maxlength="100" required="" id="id_title" onChange={this.handleTitleChange}/> */}
 
             <label class="required" for="id_content">Content:</label>
             <textarea name="content" cols="40" rows="10" class="vLargeTextField" required="" id="id_content" onChange={this.handleContentChange}></textarea>

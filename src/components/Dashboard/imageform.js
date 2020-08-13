@@ -13,8 +13,12 @@ export default class ImageForm extends React.Component {
   }
 
     state = {
-      title: '',
+      title: 'def',
       image: null,
+    }
+
+    reloadTheThing() {
+      window.location.reload();
     }
   
     handleTitleChange = event => {
@@ -63,10 +67,7 @@ export default class ImageForm extends React.Component {
       return (
         <div>
           <form onSubmit={this.handleSubmit}>
-
-            <label class="required" for="id_title">Title:</label>
-            <input type="text" name="title" class="vTextField" maxlength="100" required="" id="id_title" onChange={this.handleTitleChange}/>
-
+            
             <label class="required" for="id_image">Image:</label>
             <input type="file" name="image" accept="image/*" required="" id="id_image" onChange={this.handleImageChange}/>
 

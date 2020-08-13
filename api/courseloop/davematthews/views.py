@@ -223,8 +223,12 @@ def grade(request):
         except KeyError:
             pass
 
-    grade = round(my_points/total_points, 3)
-    data = {"grade": grade, "my_points":my_points, "total_points":total_points}
+    if total_points == 0:
+        my_grade = 0
+    else:
+        my_grade = round(my_points/total_points, 3)
+
+    data = {"grade": my_grade, "my_points":my_points, "total_points":total_points}
     return Response(data, status=status.HTTP_200_OK)
 
 
