@@ -5,21 +5,38 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import firebase from '../firebase'
 import { withRouter, BrowserRouter } from 'react-router-dom'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import Navbar from './Navbar'
+// import React, { useEffect, useState } from 'react'
+// // import {text} from './classes'
+// import { Dropdown } from 'semantic-ui-react'
+// import { Typography, Paper, Avatar, CircularProgress, Button } from '@material-ui/core'
+// import VerifiedUserOutlined from '@material-ui/icons/VerifiedUserOutlined'
+// import withStyles from '@material-ui/core/styles/withStyles'
+// import firebase from '../../firebase'
+// import { withRouter, BrowserRouter } from 'react-router-dom'
+// import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 // import CustomTable from './table'
-import Form from './form'
-import ImageForm from './imageform'
-import Submissions from './submissions'
-import Courses from './courses'
-import Assignments from './assignments'
-import WorkDue from './workdue'
-import MyGrade from './mygrade'
-import SectionGrade from './sectiongrade'
-import GradeDist from '../GradePage'
-import DropList from '../DropList'
+// import MyGrade from './mygrade'
+// import GradeDist from '../GradePage'
 import axios from 'axios'
-import { Dropdown } from 'semantic-ui-react'
 
+var listOfClasses = [];
+
+// function lineCount( text ) {
+//     var nLines = 0;
+//     for( var i = 0, n = text.length;  i < n;  ++i ) {
+//         if( text[i] === '\n' ) {
+//             ++nLines;
+//         }
+//     }
+//     return nLines;
+// }
+
+// const DropList = () => {
+//     // var numLines = lineCount(text);
+//     return (
+//         <h1>Hello</h1>
+//     )
+// }
 
 
 const styles = theme => ({
@@ -50,7 +67,7 @@ const styles = theme => ({
 	},
 })
 
-function Dashboard(props) {
+function DropList(props) {
 
 	console.log("Change");
 	const { classes } = props
@@ -62,13 +79,9 @@ function Dashboard(props) {
 	// 	}
 	// }, [firebase.getCurrentUsername(), firebase.getCurrentUserCountry()])
 
-
-
-
 	return (
 		<main className={classes.main} style={{ paddingBottom: 200 }}>
 			<BrowserRouter>
-				<Navbar />
 			</BrowserRouter>
 
 			<Button
@@ -84,35 +97,16 @@ function Dashboard(props) {
 				<h6>Welcome, { firebase.getCurrentUsername() }</h6>
 			</div>
 
+			{/* <MyGrade /> */}
 			<Button
 				type="submit"
 				fullWidth
 				variant="contained"
-				onClick={droplist}
+				onClick={dashreturn}
 				className={classes.submit}>
-				Add More Courses Here!
+				Back to Dashboard!
           	</Button>
-			 {/* const DropdownExampleSelection = () => (
-  			<Dropdown
-    			placeholder='Select Friend'
-    			fluid
-    			selection
-    			options={gradedist}
-  			/>
-			)
-
-export default DropdownExampleSelection */}
-			
-			<MyGrade />
-			<Button
-				type="submit"
-				fullWidth
-				variant="contained"
-				onClick={gradedist}
-				className={classes.submit}>
-				More Grades!
-          	</Button>
-
+{/* 
 			<div style={{ marginTop: 40}}>
 				<h5><strong>Your Sections</strong></h5>
 				<Courses />
@@ -125,22 +119,10 @@ export default DropdownExampleSelection */}
 
 			{/* <h3>All Assignments</h3>
 			<Assignments /> */}
-			<div style={{ marginTop: 40}}>
+			{/* <div style={{ marginTop: 40}}>
 				<h5><strong>Your Submissions</strong></h5>
 				<Submissions />
-			</div>
-
-			<Router>
-				<Switch>
-					<Route exact path="/gradedist" component={GradeDist} />
-				</Switch>
-			</Router>
-
-			<Router>
-				<Switch>
-					<Route exact path="/droplist" component={DropList} />
-				</Switch>
-			</Router>
+			</div> */}
 
 			{/* <h3>FRQ Submission</h3>
 			<Form frq_id='10'/>
@@ -164,23 +146,21 @@ export default DropdownExampleSelection */}
 		props.history.push('/')
 	}
 
-	async function gradedist() {
+	async function dashreturn() {
 		try {
-			// await firebase.login(email, password)
-			props.history.replace('/gradedist')
+            console.log("BACKK")
+            if(firebase.auth.currentUser != null) {
+                console.log("WOOOOOO")
+                props.history.replace('/dashboard')
+            }
+            else {
+                props.history.push('/')
+            }
 		} catch(error) {
-			alert(error.message)
-		}
-	}
-
-	async function droplist() {
-		try {
-			// await firebase.login(email, password)
-			props.history.replace('/droplist')
-		} catch(error) {
+            console.log("BACKK  BABYYYY")
 			alert(error.message)
 		}
 	}
 }
 
-export default withRouter(withStyles(styles)(Dashboard))
+export default withRouter(withStyles(styles)(DropList))
