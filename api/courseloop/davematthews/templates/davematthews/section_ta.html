@@ -3,10 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <title>Submit HW</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
+    <div style="margin-top: 3em; margin-left: 3em;">
+        <h2>{{ course }}: Section {{ section }}</h2>
 
-    <h3>{{ section }}</h3>
+
+        <div style="margin-top: 2.5em; float:left;">
+            <h3>Create Worksheet Assignment</h3>
+            
+            <form method="post" action="http://059ed99e2114.ngrok.io/davematthews/worksheets/">
+              <fieldset class="module aligned ">
+                    <div class="form-row field-title">
+                            <div>
+                                    <label class="required" for="id_title">Title:</label>
+                                    <input type="text" name="title" class="vTextField" maxlength="100" required id="id_title" required/>
+                            </div>
+                    </div>
+            
+                    <div class="form-row field-answers">
+                        <div>
+                            <label class="required" for="id_answers">Answers:</label>
+                                <input type="text" name="answers" class="vTextField" maxlength="100" id="id_answers" required/>
+                        </div>
+                    </div>
+
+                    <div class="form-row field-section">
+                        <div>
+                            <label class="required" for="id_section">Section:</label>
+                                <input type="text" name="section" class="vTextField" maxlength="100" required id="id_section" value="{{ section_id }}" readonly/>
+                        </div>
+                    </div>
+            
+            </fieldset>
+            <input style="margin-top: 1em;" type="submit" value="Create" class="btn btn-primary" name="_save">
+            </form>
+        </div>
+
+        <div style="margin-top: 3em; margin-left: 30em; margin-bottom: 3em;">
+            <h3>Create FRQ Assignment</h3>
+            
+            <form method="post" action="http://059ed99e2114.ngrok.io/davematthews/frqs/">
+              <fieldset class="module aligned ">
+                    <div class="form-row field-title">
+                            <div>
+                                    <label class="required" for="id_title">Question:</label>
+                                    <input type="text" name="title" class="vTextField" maxlength="100" required id="id_title" required/>
+                            </div>
+                    </div>
+            
+                    <div class="form-row field-keywords">
+                        <div>
+                            <label class="required" for="id_keywords">Keywords:</label>
+                                <input type="text" name="keywords" class="vTextField" maxlength="100" id="id_keywords" required/>
+                        </div>
+                    </div>
+
+                    <div class="form-row field-section">
+                        <div>
+                            <label class="required" for="id_section">Section:</label>
+                                <input type="text" name="section" class="vTextField" maxlength="100" required id="id_section" value="{{ section_id }}" readonly/>
+                        </div>
+                    </div>
+            
+            </fieldset>
+            <input style="margin-top: 1em;" type="submit" value="Create" class="btn btn-primary" name="_save">
+            </form>
+        </div>
+
+        <div>
+            <div style="float: left;">
+                <h3>Assignments</h3>
+                {% if assignments %}
+                    {% for assignment in assignments %}
+                        <hr style="width: 100%; text-align: left;"/>
+                        <p><b>{{ assignment.assignment_title }}</b></p>
+                        <p style="margin-top: -1em;">Possible points: {{ assignment.possible_points }}</p>
+                    {% endfor %}
+                {% else %}
+                    <p>No assignments.</p>
+                {% endif %}
+            </div>
+
+            <div style="margin-left: 4em; width: 25em; float: left;">
+                <h3>Submissions</h3>
+                {% if submissions %}
+                    {% for submission in submissions %}
+                        <hr/>
+                        <p><b>{{ submission.assignment_title }}</b></p>
+                        <p style="margin-top: -1em; color:grey;">by {{ submission.uid }}</p>
+                        <p style="margin-top: -1em;">Student answer: <i>{{ submission.content }}</i></p>
+                        <p style="margin-top: -1em;">Score: {{ submission.points }} / {{ submission.possible_points }}</p>
+
+
+                    {% endfor %}
+                {% else %}
+                    <p>No submissions.</p>
+                {% endif %}
+            </div>
+
+            <div style="margin-left: 47.5em; margin-right: 5em;">
+                <h3>Students</h3>
+                {% if students %}
+                    {% for student in students %}
+                        <hr/>
+                        <p>{{ student.id }}</p>
+                        <p style="margin-top: -1em;">{{ student.grade }}%</p>
+                    {% endfor %}
+                {% else %}
+                    <p>No students.</p>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </div>
 
 </body>
 </html>

@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from django.http import HttpResponse, Http404, JsonResponse
 import json
 from davematthews.models import Student, FrqAssignment, WsAssignment, Submission, FrqSubmission
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .serializers import SubmissionSerializer, FrqSubmissionSerializer, WsAssignmentSerializer, FrqAssignmentSerializer
 from rest_framework.views import APIView
@@ -47,8 +48,40 @@ def submission_text(image_field):
 
 
 def ta_view(request, section_id):
+
+    course_title = db.child("sandbox").child(section_id).get().val()["course"]
+    section = db.child("sandbox").child(section_id).get().val()["section"]
+
+    students_data = []
+    students = get_section_students(section_id)
+    for student in students:
+        student_data = {"id":student}
+        student_data["grade"] = get_section_grade(student, section_id)["grade"]
+        students_data.append(student_data)
+
+    assignments_data = []
+    assignments = get_section_assignments(section_id)
+    for assignment in assignments:
+        assignment_data = {"id": assignment}
+        assignment_data["assignment_title"] = db.child("sandbox").child(assignment).get().val()["title"]
+        assignment_data["possible_points"] = db.child("sandbox").child(assignment).get().val()["total_points"]
+        assignments_data.append(assignment_data)
+
+    submissions_data = []
+    for student in students:
+        my_section_submissions = get_section_submissions(student, section_id)
+        for submission in my_section_submissions:
+            submission["assignment_title"] = db.child("sandbox").child(str(submission["assignment"])).get().val()["title"]
+            submission["possible_points"] = db.child("sandbox").child(str(submission["assignment"])).get().val()["total_points"]
+            submissions_data.append(submission)
+
     context = {
-        "section": section_id,
+        "course":course_title,
+        "section": section,
+        "section_id": section_id,
+        "assignments": assignments_data,
+        "students": students_data,
+        "submissions": submissions_data,
     }
     return render(request, 'davematthews/section_ta.html', context=context)
 
@@ -151,11 +184,12 @@ def get_my_courses(request):
 
     classes = []
     for entry in all_data.each():
-        if len(entry.key()) < 15:
+        if len(entry.key()) < 15 and len(entry.key()) > 4:
             classes.append(entry)
 
     for group in classes:
         details = group.val()
+        print(details)
         students = details["students"]
         if user_uid in students:
             filtered_data.append(details)
@@ -280,6 +314,9 @@ def get_section_submissions(user_uid, section_id):
 
     return my_section_submissions
 
+def get_section_students(section_id):
+    section_students = db.child("sandbox").child(section_id).child("students").get().val()
+    return section_students
 
 def get_section_assignments(section_id):
     section_assignments = db.child("sandbox").child(section_id).child("assignments").get().val()
@@ -300,10 +337,8 @@ def section_submissions(request):
     my_section_submissions = get_section_submissions(user_uid, section_id)
     return Response(my_section_submissions, status=status.HTTP_200_OK)
 
-@api_view(["GET"])
-def section_grade(request):
-    user_uid = request.GET["user"]
-    section_id = request.GET["section"]
+
+def get_section_grade(user_uid, section_id):
     my_section_submissions = get_section_submissions(user_uid, section_id)
 
     my_points = 0
@@ -319,6 +354,13 @@ def section_grade(request):
         my_section_grade = round(100 * (my_points / possible_points), 3)
 
     data = {"section": section_id, "grade":my_section_grade}
+    return data
+
+@api_view(["GET"])
+def section_grade(request):
+    user_uid = request.GET["user"]
+    section_id = request.GET["section"]
+    data = get_section_grade(user_uid, section_id)
     return Response(data, status=status.HTTP_200_OK)
 
 
@@ -490,8 +532,9 @@ class WsAssignmentView(APIView):
                 section_id = request.data["section"]
                 data = {data["uuid"]: "WS"}
                 db.child("sandbox").child(section_id).child("assignments").update(data)
-
-            return Response(asns_serializer.data, status=status.HTTP_201_CREATED)
+                return redirect('/davematthews/section/'+ section_id + '/')
+            else:
+                return Response(asns_serializer.data, status=status.HTTP_201_CREATED)
         else:
             print('error', asns_serializer.errors)
             return Response(asns_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -542,8 +585,9 @@ class FrqAssignmentView(APIView):
                 section_id = request.data["section"]
                 data = {data["uuid"]: "FRQ"}
                 db.child("sandbox").child(section_id).child("assignments").update(data)
-
-            return Response(asns_serializer.data, status=status.HTTP_201_CREATED)
+                return redirect('/davematthews/section/'+ section_id + '/')
+            else:
+                return Response(asns_serializer.data, status=status.HTTP_201_CREATED)
         else:
             print('error', asns_serializer.errors)
             return Response(asns_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
