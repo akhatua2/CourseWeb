@@ -26,10 +26,10 @@ const styles = theme => ({
 	main: {
 		width: 'auto',
 		display: 'block', // Fix IE 11 issue.
-		marginLeft: theme.spacing.unit * 3,
-		marginRight: theme.spacing.unit * 3,
+		// marginLeft: theme.spacing.unit * 3,
+		// marginRight: theme.spacing.unit * 3,
 		[theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-			width: 400,
+			width: 600,
 			marginLeft: 'auto',
 			marginRight: 'auto',
 		},
@@ -108,12 +108,12 @@ export default DropdownExampleSelection */}
 				More Grades
           	</Button>
 
-			<div style={{ marginTop: 40}}>
+			<div style={{ marginTop: 40 }}>
 				<h5><strong>Your Sections</strong></h5>
 				<Courses />
 			</div>
 
-			<div style={{ marginTop: 40}}>
+			<div style={{ marginTop: 40 }}>
 				<h5><strong>TODO Assignments</strong></h5>
 				<WorkDue />
 			</div>
