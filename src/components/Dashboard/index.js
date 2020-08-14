@@ -66,10 +66,9 @@ function Dashboard(props) {
 
 
 	return (
-		<main className={classes.main} style={{ paddingBottom: 200 }}>
-			<BrowserRouter>
-				<Navbar />
-			</BrowserRouter>
+		<main className={classes.main} style={{ paddingTop: 50, paddingBottom: 200 }}>
+
+			<h5>Welcome, <b>{ firebase.getCurrentUsername() }</b></h5>
 
 			<Button
 				type="submit"
@@ -80,17 +79,13 @@ function Dashboard(props) {
 				Logout
           	</Button>
 
-			<div style={{ marginTop: 30, marginBottom: -10 }}>
-				<h6>Welcome, { firebase.getCurrentUsername() }</h6>
-			</div>
-
 			<Button
 				type="submit"
 				fullWidth
 				variant="contained"
 				onClick={droplist}
 				className={classes.submit}>
-				Add More Courses Here!
+				Add Sections
           	</Button>
 			 {/* const DropdownExampleSelection = () => (
   			<Dropdown
@@ -103,14 +98,14 @@ function Dashboard(props) {
 
 export default DropdownExampleSelection */}
 			
-			<MyGrade />
+			{/* <MyGrade /> */}
 			<Button
 				type="submit"
 				fullWidth
 				variant="contained"
 				onClick={gradedist}
 				className={classes.submit}>
-				More Grades!
+				More Grades
           	</Button>
 
 			<div style={{ marginTop: 40}}>
