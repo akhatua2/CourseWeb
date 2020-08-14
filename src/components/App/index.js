@@ -9,6 +9,7 @@ import { CssBaseline, CircularProgress } from '@material-ui/core'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import firebase from '../firebase'
 import GradeDist from '../GradePage'
+import DropList from '../DropList'
 
 const theme = createMuiTheme()
 
@@ -33,6 +34,7 @@ export default function App() {
 					<Route exact path="/register" component={Register} />
 					<Route exact path="/dashboard" component={Dashboard} />
 					<Route exact path="/gradedist" component={GradeDist} />
+					<Route exact path="/droplist" component={DropList} />
 				</Switch>
 			</Router>
 		</MuiThemeProvider>
