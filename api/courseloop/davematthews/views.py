@@ -131,6 +131,18 @@ def ws_grade(request, ws_id):
             return Response(subs_serializer.data, status=status.HTTP_201_CREATED)
     return HttpResponse("Something broke!")
 
+@api_view(["GET"])
+def section_grades(request, section_id):
+    students_data = []
+    students = get_section_students(section_id)
+
+    for student in students:
+        student_data = {"id":student}
+        student_data["grade"] = get_section_grade(student, section_id)["grade"]
+        students_data.append(student_data)
+
+    return Response(students_data, status=status.HTTP_200_OK)
+
 
 @api_view(['POST'])
 def add_course(request):
