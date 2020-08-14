@@ -93,10 +93,6 @@ function DropList(props) {
 				Logout
           	</Button>
 
-			<div style={{ marginTop: 30, marginBottom: -10 }}>
-				<h6>Welcome, { firebase.getCurrentUsername() }</h6>
-			</div>
-
 			{/* <MyGrade /> */}
 			<Button
 				type="submit"
