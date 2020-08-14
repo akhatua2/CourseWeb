@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
+//import { Dropdown } from 'semantic-ui-react'
+import ReactDOM from 'react-dom'
 import { Typography, Paper, Avatar, CircularProgress, Button } from '@material-ui/core'
 import VerifiedUserOutlined from '@material-ui/icons/VerifiedUserOutlined'
 import withStyles from '@material-ui/core/styles/withStyles'
 import firebase from '../firebase'
 import { withRouter, BrowserRouter } from 'react-router-dom'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import DropCountry from './dropdown'
 // import React, { useEffect, useState } from 'react'
 // // import {text} from './classes'
 // import { Dropdown } from 'semantic-ui-react'
@@ -37,7 +40,6 @@ var listOfClasses = [];
 //         <h1>Hello</h1>
 //     )
 // }
-
 
 const styles = theme => ({
 	main: {
@@ -97,6 +99,7 @@ function DropList(props) {
 				<h6>Welcome, { firebase.getCurrentUsername() }</h6>
 			</div>
 
+	
 			{/* <MyGrade /> */}
 			<Button
 				type="submit"
