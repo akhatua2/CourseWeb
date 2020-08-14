@@ -170,16 +170,23 @@ def remove_course(request):
 
 @api_view(['GET'])
 def all_courses(request):
-
+    user_uid = request.GET["user"]
     all_data = db.child("sandbox").get()
     filtered_data = []
 
     classes = []
     for entry in all_data.each():
-        if len(entry.key()) < 15:
-            classes.append(entry.val())
+        if len(entry.key()) < 15 and len(entry.key()) > 4:
+            classes.append(entry)
 
-    data = classes
+    for group in classes:
+        details = group.val()
+        print(details)
+        students = details["students"]
+        if user_uid not in students:
+            filtered_data.append(details)
+
+    data = filtered_data
     print(data)
     return Response(data, status=status.HTTP_200_OK)
 

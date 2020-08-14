@@ -16,7 +16,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 // import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 // import CustomTable from './table'
 // import MyGrade from './mygrade'
-// import GradeDist from '../GradePage'
+import Sections from './sections'
 import axios from 'axios'
 
 var listOfClasses = [];
@@ -106,11 +106,14 @@ function DropList(props) {
 				className={classes.submit}>
 				Back to Dashboard!
           	</Button>
-{/* 
+
 			<div style={{ marginTop: 40}}>
-				<h5><strong>Your Sections</strong></h5>
-				<Courses />
+				<h5><strong>All Sections</strong></h5>
+				<Sections />
 			</div>
+			
+{/* 
+
 
 			<div style={{ marginTop: 40}}>
 				<h5><strong>TODO Assignments</strong></h5>
