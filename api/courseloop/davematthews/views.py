@@ -131,6 +131,18 @@ def ws_grade(request, ws_id):
             return Response(subs_serializer.data, status=status.HTTP_201_CREATED)
     return HttpResponse("Something broke!")
 
+@api_view(["GET"])
+def section_grades(request, section_id):
+    students_data = []
+    students = get_section_students(section_id)
+
+    for student in students:
+        student_data = {"id":student}
+        student_data["grade"] = get_section_grade(student, section_id)["grade"]
+        students_data.append(student_data)
+
+    return Response(students_data, status=status.HTTP_200_OK)
+
 
 @api_view(['POST'])
 def add_course(request):
@@ -158,16 +170,23 @@ def remove_course(request):
 
 @api_view(['GET'])
 def all_courses(request):
-
+    user_uid = request.GET["user"]
     all_data = db.child("sandbox").get()
     filtered_data = []
 
     classes = []
     for entry in all_data.each():
-        if len(entry.key()) < 15:
-            classes.append(entry.val())
+        if len(entry.key()) < 15 and len(entry.key()) > 4:
+            classes.append(entry)
 
-    data = classes
+    for group in classes:
+        details = group.val()
+        print(details)
+        students = details["students"]
+        if user_uid not in students:
+            filtered_data.append(details)
+
+    data = filtered_data
     print(data)
     return Response(data, status=status.HTTP_200_OK)
 
