@@ -46,6 +46,13 @@ def submission_text(image_field):
     return pytesseract.image_to_string(Image.open(image_field))
 
 
+def ta_view(request, section_id):
+    context = {
+        "section": section_id,
+    }
+    return render(request, 'davematthews/section_ta.html', context=context)
+
+
 # create ws submission + grades + updates firebase DB
 @api_view(['POST'])
 def ws_grade(request, ws_id):
@@ -335,13 +342,6 @@ def grade(request):
         except KeyError:
             pass
 
-    print()
-    print()
-    print(my_points)
-    print(total_points)
-    print()
-    print()
-
     if total_points == 0:
         my_grade = 0
     else:
@@ -486,6 +486,11 @@ class WsAssignmentView(APIView):
 
             db.child("sandbox").child(str(latest_asn.uuid)).set(data)
 
+            if "section" in request.data:
+                section_id = request.data["section"]
+                data = {data["uuid"]: "WS"}
+                db.child("sandbox").child(section_id).child("assignments").update(data)
+
             return Response(asns_serializer.data, status=status.HTTP_201_CREATED)
         else:
             print('error', asns_serializer.errors)
@@ -533,6 +538,10 @@ class FrqAssignmentView(APIView):
             data["uuid"] = str(latest_asn.uuid)
 
             db.child("sandbox").child(str(latest_asn.uuid)).set(data)
+            if "section" in request.data:
+                section_id = request.data["section"]
+                data = {data["uuid"]: "FRQ"}
+                db.child("sandbox").child(section_id).child("assignments").update(data)
 
             return Response(asns_serializer.data, status=status.HTTP_201_CREATED)
         else:

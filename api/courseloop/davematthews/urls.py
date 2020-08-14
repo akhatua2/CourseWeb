@@ -32,4 +32,6 @@ urlpatterns = [
     path('sectionassignments/', views.section_assignments, name='section_assignments'),
     path('sectiongrade/', views.section_grade, name='section_grade'),
 
+    path('section/<section_id>/', views.ta_view, name='section'),
+
 ]
