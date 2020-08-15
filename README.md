@@ -1,5 +1,9 @@
 ![Poster](poster.png?raw=true "Poster")
 
+# Summary of Project
+
+CourseWeb is a web application developed as part of the HackThis hacakthon sponsored by HackIllinois. Student users are able to register/login and can access their own dashboard where they can add courses and view upcoming assignments in their currently enrolled courses. Autograding is done instantly using NLP, for both image and text-based images and students' grades are refreshed instantaneously upon the autograding process being completed. Also developed a TA/Professor portal, where a new assignment and its grading rubric can be created by any educator.
+
 # How to Locally Run CourseLoop
 
 
