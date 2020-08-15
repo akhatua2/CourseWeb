@@ -24,7 +24,7 @@ export default class Submissions extends React.Component {
                 'Content-Type': 'application/json',
             }
     
-            axios.get(`http://059ed99e2114.ngrok.io/davematthews/submissions/`, { params: get_body}, { headers: headers})
+            axios.get(`http://127.0.0.1:8000/davematthews/submissions/`, { params: get_body}, { headers: headers})
             .then(res => {
                 console.log(res.data)
                 const submissions = res.data;

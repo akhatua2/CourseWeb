@@ -30,7 +30,7 @@ export default class Sections extends React.Component {
                 'Content-Type': 'application/json',
                 }
             
-                axios.post("http://059ed99e2114.ngrok.io/davematthews/add/", add_data, { headers: headers})
+                axios.post("http://127.0.0.1:8000/davematthews/add/", add_data, { headers: headers})
                 .then(res => {
                     console.log(res.data);
                 }).then(this.reloadTheThing)
@@ -59,7 +59,7 @@ export default class Sections extends React.Component {
                 'user': user.uid,
             };
     
-            axios.get(`http://059ed99e2114.ngrok.io/davematthews/allcourses/`, { params: get_body}, { headers: headers})
+            axios.get(`http://127.0.0.1:8000/davematthews/allcourses/`, { params: get_body}, { headers: headers})
             .then(res => {
                 const sections = res.data;
                 console.log(sections);

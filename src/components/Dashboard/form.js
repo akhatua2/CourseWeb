@@ -37,7 +37,7 @@ export default class Form extends React.Component {
       if (user) {
         console.log(user.uid);
         console.log(this.state.frq_id);
-        console.log("http://059ed99e2114.ngrok.io/davematthews/grade/frq/" + this.state.frq_id + "/"); 
+        console.log("http://127.0.0.1:8000/davematthews/grade/frq/" + this.state.frq_id + "/"); 
 
         const submission = {
           title: this.state.title,
@@ -49,7 +49,7 @@ export default class Form extends React.Component {
           'Content-Type': 'application/json',
         }
     
-        axios.post("http://059ed99e2114.ngrok.io/davematthews/grade/frq/" + this.state.frq_id + "/", submission, { headers: headers})
+        axios.post("http://127.0.0.1:8000/davematthews/grade/frq/" + this.state.frq_id + "/", submission, { headers: headers})
           .then(res => {
             console.log(res);
             console.log(res.data);

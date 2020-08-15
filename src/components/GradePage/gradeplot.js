@@ -20,7 +20,7 @@ export default class GradePlot extends React.Component {
                 'Content-Type': 'application/json',
             }
     
-            axios.get(`http://059ed99e2114.ngrok.io/davematthews/studentgrades/bio101-5B/`, { headers: headers})
+            axios.get(`http://127.0.0.1:8000/davematthews/studentgrades/bio101-5B/`, { headers: headers})
             .then(res => {
                 console.log(res.data)
                 const gradedata = res.data;
